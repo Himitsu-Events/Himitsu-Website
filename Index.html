@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Himitsu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;500;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #080808;
+      --dark: #111111;
+      --card: #161616;
+      --border: #242424;
+      --mid: #e1778a;
+      --light: #cfcfcf;
+      --white: #F0F0EE;
+      --accent: #fa5050;
+      --accent-dim: rgba(255, 0, 166, 0.106);
+      --accent-mid: rgba(76, 222, 247, 0.15);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Syne', sans-serif;
+      font-weight: 400;
+      background: var(--black);
+      color: var(--white);
+      line-height: 1.6;
+      cursor: crosshair;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 24px 48px;
+      border-bottom: 3px solid var(--border);
+      background: rgba(63, 63, 63, 0.609);
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-logo {
+      grid-column: 2;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-logo img { height: 30px; }
+
+    .nav-logo-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      letter-spacing: 4px;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      justify-self: end;
+      display: flex;
+      gap: 50px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 16px;
+      color: var(--mid);
+      text-decoration: none;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 48px 80px;
+      position: relative;
+      overflow: hidden;
+      background-image: url('AsteraTubeGig2.0.png');
+      background-size: cover;
+      background-position: center;
+      background-color: #f50000;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(255, 0, 0, 0.3) 0%, rgba(8,8,8,0.95) 100%);
+      pointer-events: none;
+    }
+
+    .hero-ticker {
+      position: absolute;
+      top: 50%;
+      left: 0; right: 0;
+      transform: translateY(-50%);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(120px, 18vw, 220px);
+      letter-spacing: -4px;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,0.14);
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+      animation: ticker 30s linear infinite;
+    }
+
+    @keyframes ticker {
+      from { transform: translateY(-50%) translateX(0); }
+      to   { transform: translateY(-50%) translateX(-50%); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      animation: fadeUp 1s ease both;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 20px;
+      letter-spacing: 4px;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(72px, 12vw, 160px);
+      line-height: 0.9;
+      letter-spacing: 2px;
+      color: var(--white);
+      margin-bottom: 32px;
+    }
+
+    .hero h1 span {
+      color: var(--accent);
+      display: block;
+    }
+
+    .hero-desc {
+      font-size: 16px;
+      color: var(--light);
+      max-width: 480px;
+      line-height: 1.8;
+      margin-bottom: 48px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 16px 40px;
+      background: var(--accent);
+      color: var(--black);
+      text-decoration: none;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: background 0.2s, transform 0.15s;
+      cursor: crosshair;
+    }
+
+    .btn:hover { background: var(--white); transform: translateY(-2px); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid var(--border);
+      padding: 15px 40px;
+    }
+
+    .btn-ghost:hover { background: transparent; border-color: var(--white); }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 120px 48px; }
+
+    .section-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(52px, 7vw, 88px);
+      line-height: 0.95;
+      letter-spacing: 2px;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+
+    .section-subtitle {
+      font-size: 16px;
+      color: var(--light);
+      max-width: 520px;
+      line-height: 1.8;
+      margin-bottom: 64px;
+    }
+
+    /* ── SERVICES ── */
+    #services {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .service-card {
+      background: var(--card);
+      padding: 48px 40px;
+      transition: background 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .service-card:hover { background: #fa505054; }
+    .service-card:hover::after { transform: scaleX(1); }
+
+    .service-number {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+
+    .service-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      letter-spacing: 1px;
+      color: var(--white);
+      margin-bottom: 16px;
+      line-height: 1;
+    }
+
+    .service-desc {
+      font-size: 14px;
+      color: var(--light);
+      line-height: 1.8;
+    }
+
+    /* ── GALLERY ── */
+    #gallery {
+      background: var(--black);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 3px;
+    }
+
+    .gallery-item {
+      overflow: hidden;
+      background: var(--card);
+    }
+
+.gallery-item:nth-child(1) { grid-column: span 7; }
+.gallery-item:nth-child(2) { grid-column: span 5; }
+.gallery-item:nth-child(3) { grid-column: span 6; }
+.gallery-item:nth-child(4) { grid-column: span 6; }
+.gallery-item:nth-child(5) { grid-column: span 5; }
+.gallery-item:nth-child(6) { grid-column: span 7; }
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease, filter 0.4s ease;
+  min-height: 240px;
+  filter: saturate(0.7) brightness(0.85);
+}
+
+.gallery-item:nth-child(1) img {
+  object-position: center 30%;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.06);
+      filter: saturate(1) brightness(1);
+    }
+
+    .gallery-placeholder {
+      width: 100%;
+      min-height: 240px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      color: var(--mid);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      background: var(--dark);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      border-top: 1px solid var(--border);
+    }
+
+    .about-text {
+      font-size: 16px;
+      color: var(--light);
+      line-height: 1.9;
+      margin-bottom: 20px;
+    }
+
+    .about-stats {
+      display: flex;
+      gap: 48px;
+      margin-top: 48px;
+      padding-top: 48px;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 52px;
+      color: var(--accent);
+      line-height: 1;
+      letter-spacing: 1px;
+    }
+
+    .stat-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      color: var(--mid);
+      margin-top: 6px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .about-image-placeholder {
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.about-image-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: var(--black);
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 80px;
+      align-items: start;
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-info h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(48px, 6vw, 80px);
+      line-height: 0.95;
+      letter-spacing: 2px;
+      margin-bottom: 24px;
+    }
+
+    .contact-info p {
+      font-size: 15px;
+      color: var(--light);
+      line-height: 1.8;
+      margin-bottom: 48px;
+    }
+
+    .contact-detail { display: flex; flex-direction: column; gap: 20px; }
+
+    .contact-item-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2px;
+    }
+
+    .contact-item-value { font-size: 15px; color: var(--white); }
+
+    /* ── FORM ── */
+    .enquiry-form {
+      background: var(--card);
+      padding: 48px;
+      border: 1px solid var(--border);
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .form-group { margin-bottom: 24px; }
+
+    .form-group label {
+      display: block;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 10px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 14px 16px;
+      background: var(--black);
+      border: 1px solid var(--border);
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      color: var(--white);
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+      border-radius: 0;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--mid); }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--accent); }
+
+    .form-group select option { background: var(--dark); }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+
+    .form-submit {
+      width: 100%;
+      padding: 18px;
+      background: var(--accent);
+      color: var(--black);
+      border: none;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      cursor: crosshair;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .form-submit:hover { background: var(--white); transform: translateY(-1px); }
+
+    .form-note {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      color: var(--mid);
+      margin-top: 14px;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      padding: 32px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 3px;
+      color: var(--white);
+    }
+
+    .footer-copy {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      color: var(--mid);
+      letter-spacing: 1.5px;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 18px 24px; }
+      .nav-links { display: none; }
+      section { padding: 70px 24px; }
+      .hero { padding: 0 24px 60px; }
+      #about, #contact { grid-template-columns: 1fr; gap: 40px; }
+      .form-row { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; gap: 3px; }
+      .gallery-item { grid-column: span 1 !important; grid-row: span 1 !important; }
+      .about-stats { gap: 24px; }
+      .enquiry-form { padding: 28px 20px; }
+      footer { flex-direction: column; gap: 10px; text-align: center; }
+      .hero-ticker { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <img src="HimitsuLogo.png" alt="Himitsu" style="height: 90px;">
+    </a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <!-- background image: add your photo to the photos folder and change hero.jpg below -->
+  <section class="hero" id="home">
+    <!-- ghosted scrolling text behind hero — change to your Himitsu -->
+    <div class="hero-ticker">Himitsu &nbsp; Master Event Producers &nbsp; Himitsu &nbsp; Void Acoustics Specialists &nbsp;</div>
+    <div class="hero-content">
+      <h1><br><span>Welcome to</span><br>Himitsu Events</h1>
+      <p class="hero-desc">
+ <div style="height: 100px;"></div>
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn">Book an enquiry</a>
+        <a href="#services" class="btn btn-ghost">What we do</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <p class="section-label">What we offer</p>
+    <h2 class="section-title">Our<br>Services</h2>
+    <p class="section-subtitle">
+    </p>
+    <div class="services-grid">
+
+      <!-- COPY THIS BLOCK TO ADD MORE SERVICES -->
+      <div class="service-card">
+        <div class="service-number">// 01</div>
+        <h3 class="service-name">VOID acoustics Hire</h3>
+        <p class="service-desc">
+        Void Acoustics is a high-end sound system brand known for its powerful form and unparalled sound quality. 
+        </p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-number">// 02</div>
+        <h3 class="service-name">AV Reinforcement</h3>
+        <p class="service-desc">
+          Full scale AV reinforcement for live events — from intimate venue nights to major festival stages. 
+          We handle the spec, the crew and the delivery so you can focus on the show.
+        </p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-number">// 03</div>
+        <h3 class="service-name">Event Design & Production</h3>
+        <p class="service-desc">
+          We offer end to end event production and stage/set design services. From concept development and stage design to technical production and onsite management, we bring your vision to life with precision and creativity.
+        </p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-number">// 04</div>
+        <h3 class="service-name">Install</h3>
+        <p class="service-desc">
+          We provide installation services for permanent and semi-permanent sound systems in venues, clubs, bars, and other spaces. Our team ensures optimal sound quality and system performance tailored to your specific needs.
+        </p>
+      </div>
+      <!-- END SERVICE BLOCK -->
+
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <p class="section-label">Our events</p>
+    <h2 class="section-title">Gallery</h2>
+    <p class="section-subtitle">
+    </p>
+    <div class="gallery-grid">
+      <!-- TO ADD A PHOTO: replace the div.gallery-placeholder with:
+           <img src="photos/your-photo.jpg" alt="Brief description"> -->
+      <div class="gallery-item"><img src="TriMotion2.png" alt="Event photo"></div>
+      <div class="gallery-item"><img src="Arena.png" alt="Event photo"></div>
+      <div class="gallery-item"><img src="Drums.png" alt="Event photo"></div>
+      <div class="gallery-item"><img src="fisher.png" alt="Event photo"></div>
+      <div class="gallery-item"><img src="YamahaCL3.png" alt="Event photo"></div>
+      <div class="gallery-item"><img src="astera.png" alt="Event photo"></div>
+    </div>
+  </section>
+
+<!-- ABOUT -->
+  <section id="about">
+    <div>
+      <p class="section-label">About us</p>
+      <h2 class="section-title">Who<br>We Are</h2>
+      <p class="about-text">
+        Himitsu is a comunity of event professionals who have spent years working at the sharp end of live events. The three founders collectively have over three decades of experience in the events industry. 
+        With a shared passion and severe love for live music, the spectacular production behind it and an obsession with the technology - Himitsu was born out of us believeing that the equipment is just as important to the art form as the music itself!
+      </p>
+      <p class="about-text">
+      We specialsise in using Void Acousitcs systems as there is simply nothing else like them - Crafted in the UK, sonically and aesthetically they are phenomenal. And we want to share that with as many people as possible!
+      </p>
+      <div class="about-stats">
+        <div>
+          <div class="stat-number">10+</div>
+          <div class="stat-label">Events run</div>
+        </div>
+        <div>
+          <div class="stat-number">10K+</div>
+          <div class="stat-label">Attendees</div>
+        </div>
+        <div>
+          <div class="stat-number">3+</div>
+          <div class="stat-label">Years active</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-image-placeholder">
+      <img src="VoidRig.png" alt="About us">
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-info">
+      <p class="section-label">Get in touch</p>
+      <h2>Send an<br>Enquiry</h2>
+      <p>
+        Fill out the form and we will get back to you as soon as possible.
+        
+      </p>
+      <div class="contact-detail">
+        <div class="contact-item">
+          <div class="contact-item-label">Email</div>
+          <div class="contact-item-value">info@himitsuevents.com</div>
+        </div>
+        <div class="contact-item">
+          
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-label">Based in</div>
+          <div class="contact-item-value">Nottingham, UK</div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-label">Socials</div>
+          <div class="contact-item-value">@Himitsu.uk</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORM — get your free key at web3forms.com then paste it below -->
+    <div class="enquiry-form">
+      <form action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="05b02245-2152-4cdc-b21e-a4acdeb99b36">
+        <input type="hidden" name="subject" value="New enquiry from website">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" placeholder="07XXX XXXXXX">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="your@email.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="service">Enquiry type</label>
+          <select id="service" name="service">
+            <option value="">Select...</option>
+            <option>Void Hire</option>
+            <option>AV Reinforcement</option>
+            <option>Event Design & Production</option>
+            <option>Installation</option>
+            <option>General enquiry</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Tell us what you are looking for..."></textarea>
+        </div>
+
+        <button type="submit" class="form-submit">Send Enquiry</button>
+        <p class="form-note">// We will aim to reply within two working days</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-logo">Himitsu Events</span>
+    <span class="footer-copy">© 2026 Himitsu Events. All rights reserved.</span>
+  </footer>
+
+</body>
+</html>
