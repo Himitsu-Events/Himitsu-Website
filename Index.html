@@ -345,12 +345,28 @@
 
     /* ── ABOUT ── */
     #about {
-      background: var(--dark);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
+      position: relative;
+      overflow: hidden;
+      /* Swap 'AboutBackground.jpg' for your real photo — the gradient below is just a moody placeholder and will sit behind it automatically */
+      background-image: url('AboutBackground.jpg'), radial-gradient(circle at 30% 20%, #1c0e10 0%, var(--dark) 55%, var(--black) 100%);
+      background-size: cover, cover;
+      background-position: center, center;
       border-top: 1px solid var(--border);
+      padding: 160px 48px;
+    }
+
+    #about::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(8,8,8,0.55) 0%, rgba(8,8,8,0.92) 100%);
+      pointer-events: none;
+    }
+
+    .about-content {
+      position: relative;
+      z-index: 2;
+      max-width: 640px;
     }
 
     .about-text {
@@ -383,19 +399,6 @@
       margin-top: 6px;
       letter-spacing: 2px;
       text-transform: uppercase;
-    }
-
-    .about-image-placeholder {
-  overflow: hidden;
-  border: 1px solid var(--border);
-}
-
-.about-image-placeholder img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-
     }
 
     /* ── CONTACT ── */
@@ -543,7 +546,8 @@
       .nav-links { display: none; }
       section { padding: 70px 24px; }
       .hero { padding: 0 24px 60px; }
-      #about, #contact { grid-template-columns: 1fr; gap: 40px; }
+      #about { padding: 90px 24px; }
+      #contact { grid-template-columns: 1fr; gap: 40px; }
       .form-row { grid-template-columns: 1fr; }
       .about-stats { gap: 24px; }
       .enquiry-form { padding: 28px 20px; }
@@ -628,17 +632,17 @@
   </section>
 
 <!-- ABOUT -->
+  <!-- Background image: drop a file named AboutBackground.jpg into this folder to replace the placeholder gradient -->
   <section id="about">
-    <div>
+    <div class="about-content">
       <p class="section-label">AbouT</p>
       <h2 class="section-title">WE ARE<br>HIMITSU</h2>
       <p class="about-text">
         No lineups. No headliners. Just the music — If you know, you know.
       </p>
-      <div>
       <p class="about-text">
-      </p>
         Founded with a passion of music and a love for the underground, Himitsu specialises in creating unique and immersive experiences that showcase the best in electronic music, the upcoming talent and the most innovative live production techniques.
+      </p>
       <div class="about-stats">
         <div>
           <div class="stat-number">10+</div>
@@ -653,9 +657,6 @@
           <div class="stat-label">Years active</div>
         </div>
       </div>
-    </div>
-    <div class="about-image-placeholder">
-      <img src="VoidRig.png" alt="About us">
     </div>
   </section>
 
@@ -675,7 +676,10 @@
         </div>
         <div class="contact-item">
           
-      
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-label">Based in</div>
+          <div class="contact-item-value">Nottingham, UK</div>
         </div>
         <div class="contact-item">
           <div class="contact-item-label">Socials</div>
@@ -731,7 +735,7 @@
 
   <!-- FOOTER -->
   <footer>
-    <span class="footer-logo">Himitsu Events - Part of 1st galaxy group ltd</span>
+    <span class="footer-logo">Himitsu Events - Part of The Event Experts</span>
     <span class="footer-copy">© 2026 Himitsu Events. All rights reserved.</span>
   </footer>
 
